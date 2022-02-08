@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="ConfigureSheetController" customModule="Padbury_Clock_Revived" customModuleProvider="target">
+            <connections>
+                <outlet property="darkThemeCheckbox" destination="S00-ph-A7z" id="O8B-jv-brD"/>
+                <outlet property="fontWeightSelector" destination="ZPr-3s-mEV" id="Lvz-Is-N9l"/>
+                <outlet property="showSecondsCheckbox" destination="ZBS-KB-BcL" id="SKH-Ql-p3d"/>
+                <outlet property="showTimeSeparatorsCheckbox" destination="Ck4-Uf-5fZ" id="ajJ-vn-UIw"/>
+                <outlet property="twentyfourHoursCheckbox" destination="vcR-gm-DgE" id="3c6-40-Jtw"/>
+                <outlet property="useSystemFontCheckbox" destination="Xcl-wa-wtH" id="O0n-r5-Iac"/>
+                <outlet property="window" destination="QvC-M9-y7g" id="hfg-dt-x3d"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <window title="Padbury Clock Revived" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" titlebarAppearsTransparent="YES" id="QvC-M9-y7g">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="708" y="509" width="462" height="284"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1200"/>
+            <value key="minSize" type="size" width="256" height="256"/>
+            <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
+                <rect key="frame" x="0.0" y="0.0" width="462" height="284"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <gridView xPlacement="leading" yPlacement="fill" rowAlignment="firstBaseline" rowSpacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="gJC-Fu-Ran">
+                        <rect key="frame" x="6" y="55" width="450" height="223"/>
+                        <rows>
+                            <gridRow yPlacement="top" rowAlignment="firstBaseline" id="qR4-PX-gJf"/>
+                            <gridRow yPlacement="top" rowAlignment="firstBaseline" id="hNR-Sn-yK5"/>
+                            <gridRow yPlacement="top" rowAlignment="firstBaseline" id="IXm-94-IO3"/>
+                            <gridRow yPlacement="top" rowAlignment="firstBaseline" id="q22-gN-81A"/>
+                        </rows>
+                        <columns>
+                            <gridColumn xPlacement="trailing" width="100" id="zi3-Ws-PdH"/>
+                            <gridColumn xPlacement="fill" id="Ci0-4x-MqC"/>
+                        </columns>
+                        <gridCells>
+                            <gridCell row="qR4-PX-gJf" column="zi3-Ws-PdH" id="0fO-xp-vHq">
+                                <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nvf-RD-QbQ">
+                                    <rect key="frame" x="52" y="207" width="50" height="16"/>
+                                    <textFieldCell key="cell" lineBreakMode="clipping" title="Theme:" id="LXO-Ih-MrQ">
+                                        <font key="font" usesAppearanceFont="YES"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                            </gridCell>
+                            <gridCell row="qR4-PX-gJf" column="Ci0-4x-MqC" id="Wxv-Fj-hWb">
+                                <button key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="S00-ph-A7z">
+                                    <rect key="frame" x="104" y="206" width="346" height="18"/>
+                                    <buttonCell key="cell" type="check" title="Dark Theme" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="lIc-rj-tyA">
+                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                        <font key="font" metaFont="system"/>
+                                    </buttonCell>
+                                    <connections>
+                                        <action selector="toggledCheckbox:" target="-2" id="GfI-fe-sKG"/>
+                                    </connections>
+                                </button>
+                            </gridCell>
+                            <gridCell row="hNR-Sn-yK5" column="zi3-Ws-PdH" id="rFd-tF-pe7">
+                                <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Eiq-ey-ljG">
+                                    <rect key="frame" x="51" y="175" width="51" height="16"/>
+                                    <textFieldCell key="cell" lineBreakMode="clipping" title="Format:" id="x67-8N-GDg">
+                                        <font key="font" usesAppearanceFont="YES"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                            </gridCell>
+                            <gridCell row="hNR-Sn-yK5" column="Ci0-4x-MqC" id="9ob-ff-aVI">
+                                <stackView key="contentView" distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gY9-7r-qzT">
+                                    <rect key="frame" x="106" y="127" width="344" height="64"/>
+                                    <subviews>
+                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vcR-gm-DgE">
+                                            <rect key="frame" x="-2" y="47" width="83" height="18"/>
+                                            <buttonCell key="cell" type="check" title="24h Time" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="HDX-7t-rWJ">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="toggledCheckbox:" target="-2" id="kDr-Jk-X0E"/>
+                                            </connections>
+                                        </button>
+                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ZBS-KB-BcL">
+                                            <rect key="frame" x="-2" y="23" width="116" height="18"/>
+                                            <buttonCell key="cell" type="check" title="Show Seconds" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="c3a-2J-8Wm">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="toggledCheckbox:" target="-2" id="JOb-SM-SbK"/>
+                                            </connections>
+                                        </button>
+                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ck4-Uf-5fZ">
+                                            <rect key="frame" x="-2" y="-1" width="126" height="18"/>
+                                            <buttonCell key="cell" type="check" title="Time Separators" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="zQE-TV-IO8">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="toggledCheckbox:" target="-2" id="jUQ-Im-WxZ"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <visibilityPriorities>
+                                        <integer value="1000"/>
+                                        <integer value="1000"/>
+                                        <integer value="1000"/>
+                                    </visibilityPriorities>
+                                    <customSpacing>
+                                        <real value="3.4028234663852886e+38"/>
+                                        <real value="3.4028234663852886e+38"/>
+                                        <real value="3.4028234663852886e+38"/>
+                                    </customSpacing>
+                                </stackView>
+                            </gridCell>
+                            <gridCell row="IXm-94-IO3" column="zi3-Ws-PdH" id="QwM-IL-kLx">
+                                <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GmH-OM-r8Z">
+                                    <rect key="frame" x="67" y="95" width="35" height="16"/>
+                                    <textFieldCell key="cell" lineBreakMode="clipping" title="Font:" id="WxL-HA-itY">
+                                        <font key="font" usesAppearanceFont="YES"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                            </gridCell>
+                            <gridCell row="IXm-94-IO3" column="Ci0-4x-MqC" id="oBE-24-ISA">
+                                <stackView key="contentView" distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5vM-mO-oEe">
+                                    <rect key="frame" x="106" y="46" width="344" height="65"/>
+                                    <subviews>
+                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Xcl-wa-wtH">
+                                            <rect key="frame" x="-2" y="48" width="129" height="18"/>
+                                            <buttonCell key="cell" type="check" title="Use System Font" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="CQ6-4C-g1G">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="toggledCheckbox:" target="-2" id="Rc3-Kx-D8s"/>
+                                            </connections>
+                                        </button>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fBr-j6-FWk">
+                                            <rect key="frame" x="-2" y="28" width="129" height="13"/>
+                                            <textFieldCell key="cell" lineBreakMode="clipping" title="Otherwise Helvetica Neue" id="nKl-XL-nqb">
+                                                <font key="font" textStyle="footnote" name=".SFNS-Regular"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ZPr-3s-mEV">
+                                            <rect key="frame" x="-3" y="-4" width="351" height="25"/>
+                                            <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="BO7-qs-FKA" id="pCY-fT-R2N">
+                                                <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="menu"/>
+                                                <menu key="menu" id="lfq-Tx-KaM">
+                                                    <items>
+                                                        <menuItem title="Item 1" state="on" id="BO7-qs-FKA"/>
+                                                        <menuItem title="Item 2" id="S0j-G1-3so"/>
+                                                        <menuItem title="Item 3" id="ZeW-YS-ppO"/>
+                                                    </items>
+                                                </menu>
+                                            </popUpButtonCell>
+                                            <connections>
+                                                <action selector="toggledCheckbox:" target="-2" id="1Fc-dD-LOb"/>
+                                            </connections>
+                                        </popUpButton>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="ZPr-3s-mEV" firstAttribute="leading" secondItem="5vM-mO-oEe" secondAttribute="leading" id="9Gy-LV-4u0"/>
+                                        <constraint firstAttribute="trailing" secondItem="ZPr-3s-mEV" secondAttribute="trailing" id="qcS-Bq-GNj"/>
+                                    </constraints>
+                                    <visibilityPriorities>
+                                        <integer value="1000"/>
+                                        <integer value="1000"/>
+                                        <integer value="1000"/>
+                                    </visibilityPriorities>
+                                    <customSpacing>
+                                        <real value="3.4028234663852886e+38"/>
+                                        <real value="3.4028234663852886e+38"/>
+                                        <real value="3.4028234663852886e+38"/>
+                                    </customSpacing>
+                                </stackView>
+                            </gridCell>
+                            <gridCell row="q22-gN-81A" column="zi3-Ws-PdH" id="Dyt-Ub-EYx"/>
+                            <gridCell row="q22-gN-81A" column="Ci0-4x-MqC" xPlacement="fill" id="4oo-jB-n0f"/>
+                        </gridCells>
+                    </gridView>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2Gw-oF-LdS">
+                        <rect key="frame" x="389" y="-1" width="74" height="32"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="60" id="bc6-ar-v2i"/>
+                        </constraints>
+                        <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="8UU-IZ-aSu">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="closeConfigureSheet:" target="-2" id="18E-Ty-gmg"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="gJC-Fu-Ran" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="6" id="cWO-Zj-2Kn"/>
+                    <constraint firstAttribute="bottom" secondItem="2Gw-oF-LdS" secondAttribute="bottom" constant="6" id="s4A-rO-itz"/>
+                    <constraint firstAttribute="trailing" secondItem="2Gw-oF-LdS" secondAttribute="trailing" constant="6" id="tSm-rL-km4"/>
+                    <constraint firstAttribute="trailing" secondItem="gJC-Fu-Ran" secondAttribute="trailing" constant="6" id="vCZ-x8-mWO"/>
+                    <constraint firstItem="gJC-Fu-Ran" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="6" id="wSV-HQ-Uc5"/>
+                </constraints>
+            </view>
+            <point key="canvasLocation" x="27" y="52"/>
+        </window>
+    </objects>
+</document>
