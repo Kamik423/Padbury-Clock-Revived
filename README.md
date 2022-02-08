@@ -10,7 +10,7 @@ This new version retains most of the settings from the original (if you require 
 The original screensaver used Helvetia Neue Ultra Light.
 With the new version you will also be able to select San Francisco, Apple's new system font as the font used.
 
-<img scr="screenshots/screenshot-1.png" width=50%><img scr="screenshots/screenshot-2.png" width=50%>
+<img src="screenshots/screenshot-1.png" width=50%><img src="screenshots/screenshot-2.png" width=50%>
 
 ![settings](screenshots/settings.png)
 ## Installation
