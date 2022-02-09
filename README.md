@@ -17,6 +17,20 @@ With the new version you will also be able to select San Francisco, Apple's new 
 
 Download [the latest version](https://github.com/Kamik423/Padbury-Clock-Revived/releases/latest/download/Padbury.Clock.Revived.saver.zip) from [the releases page](https://github.com/Kamik423/Padbury-Clock-Revived/releases).
 
+## Changelog
+
+### 1.0.2 (2022-02-10)
+
+* Fixed settings not saving correctly
+
+### 1.0.1 (2022-02-09)
+
+* Rebuilt as Universal Binary
+
+### 1.0.0 (2022-02-08)
+
+* Initial Release
+
 ## License
 
 This project is licensed under the [MIT license](LICENSE.md).
