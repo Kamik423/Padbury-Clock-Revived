@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -9,6 +10,7 @@
             <connections>
                 <outlet property="darkThemeCheckbox" destination="S00-ph-A7z" id="O8B-jv-brD"/>
                 <outlet property="fontWeightSelector" destination="ZPr-3s-mEV" id="Lvz-Is-N9l"/>
+                <outlet property="nightTimeModeCheckbox" destination="Amm-Fe-f9G" id="Vqv-0P-PuV"/>
                 <outlet property="showSecondsCheckbox" destination="ZBS-KB-BcL" id="SKH-Ql-p3d"/>
                 <outlet property="showTimeSeparatorsCheckbox" destination="Ck4-Uf-5fZ" id="ajJ-vn-UIw"/>
                 <outlet property="twentyfourHoursCheckbox" destination="vcR-gm-DgE" id="3c6-40-Jtw"/>
@@ -22,19 +24,19 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="708" y="509" width="462" height="284"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1200"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1175"/>
             <value key="minSize" type="size" width="256" height="256"/>
             <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="462" height="284"/>
-                <autoresizingMask key="autoresizingMask"/>
+                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <gridView xPlacement="leading" yPlacement="fill" rowAlignment="firstBaseline" rowSpacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="gJC-Fu-Ran">
-                        <rect key="frame" x="6" y="55" width="450" height="223"/>
+                        <rect key="frame" x="6" y="10" width="450" height="268"/>
                         <rows>
                             <gridRow yPlacement="top" rowAlignment="firstBaseline" id="qR4-PX-gJf"/>
                             <gridRow yPlacement="top" rowAlignment="firstBaseline" id="hNR-Sn-yK5"/>
                             <gridRow yPlacement="top" rowAlignment="firstBaseline" id="IXm-94-IO3"/>
-                            <gridRow yPlacement="top" rowAlignment="firstBaseline" id="q22-gN-81A"/>
+                            <gridRow id="Cxt-q9-mTi"/>
                         </rows>
                         <columns>
                             <gridColumn xPlacement="trailing" width="100" id="zi3-Ws-PdH"/>
@@ -43,7 +45,7 @@
                         <gridCells>
                             <gridCell row="qR4-PX-gJf" column="zi3-Ws-PdH" id="0fO-xp-vHq">
                                 <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nvf-RD-QbQ">
-                                    <rect key="frame" x="52" y="207" width="50" height="16"/>
+                                    <rect key="frame" x="52" y="252" width="50" height="16"/>
                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Theme:" id="LXO-Ih-MrQ">
                                         <font key="font" usesAppearanceFont="YES"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -52,16 +54,49 @@
                                 </textField>
                             </gridCell>
                             <gridCell row="qR4-PX-gJf" column="Ci0-4x-MqC" id="Wxv-Fj-hWb">
-                                <button key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="S00-ph-A7z">
-                                    <rect key="frame" x="104" y="206" width="346" height="18"/>
-                                    <buttonCell key="cell" type="check" title="Dark Theme" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="lIc-rj-tyA">
-                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                        <font key="font" metaFont="system"/>
-                                    </buttonCell>
-                                    <connections>
-                                        <action selector="toggledCheckbox:" target="-2" id="GfI-fe-sKG"/>
-                                    </connections>
-                                </button>
+                                <stackView key="contentView" distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sea-gl-kUy">
+                                    <rect key="frame" x="106" y="207" width="344" height="61"/>
+                                    <subviews>
+                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="S00-ph-A7z">
+                                            <rect key="frame" x="-2" y="44" width="100" height="18"/>
+                                            <buttonCell key="cell" type="check" title="Dark Theme" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="lIc-rj-tyA">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="toggledCheckbox:" target="-2" id="GfI-fe-sKG"/>
+                                            </connections>
+                                        </button>
+                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Amm-Fe-f9G">
+                                            <rect key="frame" x="-2" y="20" width="130" height="18"/>
+                                            <buttonCell key="cell" type="check" title="Night Time Mode" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="vLg-7I-fzF">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="toggledCheckbox:" target="-2" id="jYV-wW-lPa"/>
+                                            </connections>
+                                        </button>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7rt-9a-dIK">
+                                            <rect key="frame" x="-2" y="0.0" width="244" height="13"/>
+                                            <textFieldCell key="cell" lineBreakMode="clipping" title="Displays the time in red from 10:00 PM – 6:00 AM" id="Yi1-BS-phx">
+                                                <font key="font" textStyle="footnote" name=".SFNS-Regular"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                    </subviews>
+                                    <visibilityPriorities>
+                                        <integer value="1000"/>
+                                        <integer value="1000"/>
+                                        <integer value="1000"/>
+                                    </visibilityPriorities>
+                                    <customSpacing>
+                                        <real value="3.4028234663852886e+38"/>
+                                        <real value="3.4028234663852886e+38"/>
+                                        <real value="3.4028234663852886e+38"/>
+                                    </customSpacing>
+                                </stackView>
                             </gridCell>
                             <gridCell row="hNR-Sn-yK5" column="zi3-Ws-PdH" id="rFd-tF-pe7">
                                 <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Eiq-ey-ljG">
@@ -186,8 +221,8 @@
                                     </customSpacing>
                                 </stackView>
                             </gridCell>
-                            <gridCell row="q22-gN-81A" column="zi3-Ws-PdH" id="Dyt-Ub-EYx"/>
-                            <gridCell row="q22-gN-81A" column="Ci0-4x-MqC" xPlacement="fill" id="4oo-jB-n0f"/>
+                            <gridCell row="Cxt-q9-mTi" column="zi3-Ws-PdH" id="IX2-H5-KXd"/>
+                            <gridCell row="Cxt-q9-mTi" column="Ci0-4x-MqC" id="nk2-EC-GlA"/>
                         </gridCells>
                     </gridView>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2Gw-oF-LdS">

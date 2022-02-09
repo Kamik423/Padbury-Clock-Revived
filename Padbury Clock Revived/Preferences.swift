@@ -35,6 +35,14 @@ class Preferences: NSObject {
             defaults.synchronize()
         }
     }
+    
+    var nightTimeMode: Bool {
+        get { return (defaults.value(forKey: "NightTimeMode") as? Bool) ?? false }
+        set {
+            defaults.setValue(newValue, forKey: "NightTimeMode")
+            defaults.synchronize()
+        }
+    }
 
     var useAmPm: Bool {
         get { return !((defaults.value(forKey: "24h") as? Bool) ?? true) }

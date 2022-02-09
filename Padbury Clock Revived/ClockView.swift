@@ -31,8 +31,8 @@ final class ClockView: ScreenSaverView {
     var fontSize: CGFloat = 0
     var vOffset: CGFloat = 0
     
-    var backgroundColor: NSColor = .red
-    var foregroundColor: NSColor = .red
+    var backgroundColor: NSColor = .blue
+    var foregroundColor: NSColor = .blue
     
     var dateFormatter: DateFormatter = DateFormatter()
     var attributes: [NSAttributedString.Key: Any] = [:]
@@ -41,12 +41,15 @@ final class ClockView: ScreenSaverView {
         if force || !hasSetup {
             hasSetup = true
             
+            let currentHour = Calendar.current.component(.hour, from: Date())
+            let useNightTimeMode = preferences.nightTimeMode && (currentHour >= (10 + 12) || currentHour < 6)
+            
             if preferences.darkTheme {
                 backgroundColor = .black
-                foregroundColor = .white
+                foregroundColor = useNightTimeMode ? NSColor(red: 2.0 / 3.0, green: 0, blue: 0, alpha: 1) : .white
             } else {
                 backgroundColor = .white
-                foregroundColor = .black
+                foregroundColor = useNightTimeMode ? .red : .black
             }
             
             let separator = preferences.showTimeSeparators ? ":" : " "

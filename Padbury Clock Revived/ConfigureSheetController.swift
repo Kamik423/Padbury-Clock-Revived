@@ -13,6 +13,7 @@ class ConfigureSheetController: NSObject {
     @IBOutlet var window: NSWindow?
     
     @IBOutlet var darkThemeCheckbox: NSButton!
+    @IBOutlet var nightTimeModeCheckbox: NSButton!
     @IBOutlet var twentyfourHoursCheckbox: NSButton!
     @IBOutlet var showSecondsCheckbox: NSButton!
     @IBOutlet var showTimeSeparatorsCheckbox: NSButton!
@@ -33,6 +34,7 @@ class ConfigureSheetController: NSObject {
     func setup() {
         if let preferences = Preferences.shared {
             darkThemeCheckbox.state = preferences.darkTheme ? .on : .off
+            nightTimeModeCheckbox.state = preferences.nightTimeMode ? .on : .off
             twentyfourHoursCheckbox.state = preferences.useAmPm ? .off : .on
             showSecondsCheckbox.state = preferences.showSeconds ? .on : .off
             showTimeSeparatorsCheckbox.state = preferences.showTimeSeparators ? .on : .off
@@ -54,6 +56,7 @@ class ConfigureSheetController: NSObject {
     @IBAction func toggledCheckbox(_ sender: NSObject) {
         if let preferences = Preferences.shared {
             preferences.darkTheme = darkThemeCheckbox.state == .on
+            preferences.nightTimeMode = nightTimeModeCheckbox.state == .on
             preferences.useAmPm = twentyfourHoursCheckbox.state == .off
             preferences.showSeconds = showSecondsCheckbox.state == .on
             preferences.showTimeSeparators = showTimeSeparatorsCheckbox.state == .on

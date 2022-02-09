@@ -6,9 +6,10 @@ The [Padbury Clock](https://padbury.app) is a minimalist screensaver created by 
 It has not been updated in ages and actually broke for me during the Big Sur beta cycle (although that issue resolved itself).
 At that point I decided to recreate it.
 
-This new version retains most of the settings from the original (if you require the red mode feel free to add a pull request) and ads a new font family and font weight selection system.
+This new version retains most of the settings from the original (if you require the single monitor setting feel free to add a pull request) and ads a new font family and font weight selection system.
 The original screensaver used Helvetia Neue Ultra Light.
 With the new version you will also be able to select San Francisco, Apple's new system font as the font used.
+The night time mode from the original is also supported.
 
 <img src="screenshots/screenshot-1.png" width=50%><img src="screenshots/screenshot-2.png" width=50%>
 
@@ -21,6 +22,7 @@ Download [the latest version](https://github.com/Kamik423/Padbury-Clock-Revived/
 
 ### 1.0.2 (2022-02-10)
 
+* Added night time mode
 * Fixed settings not saving correctly
 
 ### 1.0.1 (2022-02-09)
