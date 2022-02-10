@@ -11,8 +11,8 @@ The original screensaver used Helvetia Neue Ultra Light.
 With the new version you will also be able to select San Francisco, Apple's new system font as the font used.
 The night time mode from the original is also supported.
 
-<img src="screenshots/screenshot-1.png" width=30%> <img src="screenshots/screenshot-2.png" width=30%> <img src="screenshots/screenshot-3.png" width=30%>
-<img src="screenshots/screenshot-4.png" width=30%> <img src="screenshots/screenshot-5.png" width=30%> <img src="screenshots/screenshot-6.png" width=30%>
+<img src="screenshots/screenshot-1.png" width=32%> <img src="screenshots/screenshot-2.png" width=32%> <img src="screenshots/screenshot-3.png" width=32%>
+<img src="screenshots/screenshot-4.png" width=32%> <img src="screenshots/screenshot-5.png" width=32%> <img src="screenshots/screenshot-6.png" width=32%>
 
 ![settings](screenshots/settings.png)
 ## Installation
