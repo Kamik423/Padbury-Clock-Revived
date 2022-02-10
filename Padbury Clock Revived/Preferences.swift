@@ -27,6 +27,39 @@ class Preferences: NSObject {
             defaults.synchronize()
         }
     }
+    
+    var font: SupportedFonts {
+        get { return SupportedFonts.named(defaults.value(forKey: "Font") as? String ?? "") }
+        set {
+            defaults.setValue(newValue.name, forKey: "Font")
+            defaults.synchronize()
+        }
+    }
+    
+    func nsFont(ofSize fontSize: CGFloat) -> NSFont {
+        let fallback = NSFont.monospacedDigitSystemFont(ofSize: fontSize, weight: fontWeight)
+        switch font {
+        case .sanFrancisco:
+            return .monospacedDigitSystemFont(ofSize: fontSize, weight: fontWeight)
+        case .sanFranciscoMono:
+            return .monospacedSystemFont(ofSize: fontSize, weight: fontWeight)
+        case .newYork:
+            let descriptor = NSFont.monospacedDigitSystemFont(ofSize: fontSize, weight: fontWeight).fontDescriptor
+            return NSFont(descriptor: descriptor.withDesign(.serif) ?? descriptor, size: 0.0) ?? fallback
+        case .helveticaNeue:
+            let fontName: String
+            switch fontWeight {
+            case .ultraLight:   fontName = "Helvetica Neue UltraLight"
+            case .thin:         fontName = "Helvetica Neue Thin"
+            case .light:        fontName = "Helvetica Neue Light"
+            case .regular:      fontName = "Helvetica Neue"
+            case .medium:       fontName = "Helvetica Neue Medium"
+            case .bold:         fontName = "Helvetica Neue Bold"
+            default:            fontName = "Helvetica Neue"
+            }
+            return NSFont(name: fontName, size: fontSize) ?? fallback
+        }
+    }
 
     var darkTheme: Bool {
         get { return (defaults.value(forKey: "DarkTheme") as? Bool) ?? true }
@@ -73,6 +106,45 @@ class Preferences: NSObject {
         set {
             defaults.setValue(newValue, forKey: "ShowSeconds")
             defaults.synchronize()
+        }
+    }
+}
+
+// MARK: - Supported Fonts ENum
+
+enum SupportedFonts: String, CaseIterable {
+    case sanFrancisco
+    case sanFranciscoMono
+    case newYork
+    case helveticaNeue
+    
+    var name: String {
+        switch self {
+        case .sanFrancisco:
+            return "San Francisco (System Font)"
+        case .sanFranciscoMono:
+            return "San Francisco Mono"
+        case .newYork:
+            return "New York"
+        case .helveticaNeue:
+            return "Helvetica Neue (Padbury Original)"
+        }
+    }
+    
+    static func named(_ name: String) -> SupportedFonts {
+        SupportedFonts.allCases.first(where: { $0.name == name }) ?? .sanFrancisco
+    }
+    
+    var availableWeights: [NSFont.Weight] {
+        switch self {
+        case .sanFrancisco:
+            return [.ultraLight, .thin, .light, .regular, .medium, .semibold, .bold, .heavy, .black]
+        case .sanFranciscoMono:
+            return [.light, .regular, .medium, .semibold, .bold, .heavy, .black]
+        case .newYork:
+            return [.regular, .medium, .semibold, .bold, .heavy, .black]
+        case .helveticaNeue:
+            return [.ultraLight, .thin, .light, .regular, .medium, .bold]
         }
     }
 }

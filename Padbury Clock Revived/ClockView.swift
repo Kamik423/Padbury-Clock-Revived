@@ -63,31 +63,23 @@ final class ClockView: ScreenSaverView {
             dateFormatter.amSymbol = "AM"
             dateFormatter.pmSymbol = "PM"
             
-            fontSize = 0.2 * bounds.width
+            let fontSizeScaleFactor : CGFloat
+            switch preferences.font {
+            case .sanFrancisco, .helveticaNeue:
+                fontSizeScaleFactor = 0.20
+            case .sanFranciscoMono:
+                fontSizeScaleFactor = 0.15
+            case .newYork:
+                fontSizeScaleFactor = 0.17
+            }
+            fontSize = fontSizeScaleFactor * bounds.width
             
             // TODO: dynamically determine value. I don't know how though
             // 0.5: align center of target rect with center of screen
             // 0.15: offset so font is visually centered
             vOffset = fontSize * 0.5 - 0.15 * fontSize
             
-            let font: NSFont
-            if preferences.useSystemFont {
-                font = NSFont.monospacedDigitSystemFont(ofSize: fontSize, weight: preferences.fontWeight)
-            } else {
-                let fontName: String
-                switch preferences.fontWeight {
-                case .ultraLight:   fontName = "Helvetica Neue UltraLight"
-                case .thin:         fontName = "Helvetica Neue Thin"
-                case .light:        fontName = "Helvetica Neue Light"
-                case .regular:      fontName = "Helvetica Neue"
-                case .medium:       fontName = "Helvetica Neue Medium"
-                case .bold:         fontName = "Helvetica Neue Bold"
-                default:            fontName = "Helvetica Neue"
-                }
-                // not supported:
-                // semibold, heavy, black
-                font = NSFont(name: fontName, size: fontSize)!
-            }
+            let font = preferences.nsFont(ofSize: fontSize)
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.alignment = .center
             attributes = [
