@@ -31,6 +31,7 @@ final class ClockView: ScreenSaverView {
     
     var fontSize: CGFloat = 0
     var vOffset: CGFloat = 0
+    var lineHeight: CGFloat = 0
     
     var backgroundColor: NSColor = .blue
     var foregroundColor: NSColor = .green
@@ -76,34 +77,29 @@ final class ClockView: ScreenSaverView {
         dateFormatter.dateFormat = "\(hour)\(minute)\(second)\(suffix)"
         dateFormatter.amSymbol = "AM"
         dateFormatter.pmSymbol = "PM"
-        
-        // The font gets a font size relative to the screen width as not to clip.
-        // I don't know how to determine this correctly, these are ugly hard coded
-        // numbers and they MIGHT fail for long strings (bold + AM/PM). If you know
-        // of a better system please make a pull request or write me an email!
-        // >>> contact.kamik423@gmail.com <<<
-        let fontSizeScaleFactor : CGFloat
-        switch preferences.fontFamily {
-        case .sanFrancisco, .neueHelvetica:
-            fontSizeScaleFactor = 0.20
-        case .sanFranciscoMono:
-            fontSizeScaleFactor = 0.13
-        case .newYork:
-            fontSizeScaleFactor = 0.17
+
+        // Compute fontsize to fit screen.
+        // Sample string is measured. It is contained in <> to give it some consistent space
+        // at the edge of the screen.
+        var sizingString = "<11"
+        sizingString += preferences.showTimeSeparators ? ":" : " "
+        sizingString += "59"
+        if preferences.showSeconds {
+            sizingString += preferences.showTimeSeparators ? ":" : " "
+            sizingString += "59"
+            sizingString += preferences.useAmPm ? " AM" : ""
+        } else {
+            // If no seconds are used and no AM the font size should still be decreased a bit
+            // because otherwise it will be very gimongous and not very minimalist
+            sizingString += preferences.useAmPm ? " AM" : "X"
         }
-        fontSize = fontSizeScaleFactor * bounds.width
-        
-        // Vertical offset of the font. This is manually determined.
-        // The 0.15 is to move it down a bit since the center of the font rect is
-        // lower than the center of the numbers as the rect accounts for lower case
-        // letter that might extend below the baseline.
-        //
-        // 0.5: align center of target rect with center of screen
-        // 0.15: offset so font is visually centered
-        vOffset = fontSize * 0.5 - 0.15 * fontSize
-        
+        sizingString += ">"
+        fontSize = 100 * bounds.width / NSString(string: sizingString).size(withAttributes: [.font: preferences.nsFont(ofSize: 100)]).width
+
         // Load the correct font
         let font = preferences.nsFont(ofSize: fontSize)
+        lineHeight = font.ascender - font.descender - font.leading
+        vOffset = (font.descender + font.leading) - 0.5 * font.capHeight
         // Set the paragraph style with the correct font, centering and color.
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .center
@@ -140,11 +136,13 @@ final class ClockView: ScreenSaverView {
         if preferences.mainScreenOnly && !isMainScreen { return }
         
         // The font rect. vOffset has been described above
-        let targetRect = NSRect(x: 0, y: bounds.height * 0.5 - vOffset, width: bounds.width, height: fontSize)
+        let targetRect = NSRect(x: 0, y: bounds.height / 2 + vOffset, width: bounds.width, height: lineHeight)
         
         ///// For debugging the font rect can be drawn now.
         // NSColor.blue.setFill()
         // targetRect.fill()
+        // NSColor.green.setFill()
+        // NSRect(x: 0, y: bounds.height / 2, width: bounds.width, height: 1).fill()
         
         // Get the time string
         let time = NSString(string: dateFormatter.string(from: Date()))

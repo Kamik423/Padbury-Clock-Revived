@@ -25,6 +25,12 @@ Download [the latest version](https://github.com/Kamik423/Padbury-Clock-Revived/
 
 ## Changelog
 
+### 1.1.2 (2022-02-14)
+
+* Dynamically load font weights and display them in the dropdown
+* Compute font size dynamically based on enabled and disabled features
+* Compute correct vertical centering instead of guesstimating it
+
 ### 1.1.1 (2022-02-10)
 
 * Added option for main screen only

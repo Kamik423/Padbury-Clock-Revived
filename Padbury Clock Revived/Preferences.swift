@@ -42,6 +42,11 @@ class Preferences: NSObject {
             // Alternate Punctuation (rounded, raised colon)
             featureSettings.append([.typeIdentifier: kCharacterAlternativesType, .selectorIdentifier: 1])
         }
+        // Alternative fontfeatures can be determined using
+        // CTFontCopyFeatures(NSFont(name: ".AppleSystemUIFont", size: 10)!)
+        // SF supports open 4, straight 6 and 9
+        // NY supports old style
+        
         // Apply the attributes
         font = NSFont(descriptor: font.fontDescriptor.addingAttributes([.featureSettings: featureSettings]), size: 0.0) ?? font
         return font
