@@ -83,7 +83,7 @@ final class ClockView: ScreenSaverView {
         // of a better system please make a pull request or write me an email!
         // >>> contact.kamik423@gmail.com <<<
         let fontSizeScaleFactor : CGFloat
-        switch preferences.font {
+        switch preferences.fontFamily {
         case .sanFrancisco, .neueHelvetica:
             fontSizeScaleFactor = 0.20
         case .sanFranciscoMono:

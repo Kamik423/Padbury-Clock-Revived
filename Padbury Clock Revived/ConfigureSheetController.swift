@@ -22,6 +22,7 @@ class ConfigureSheetController: NSObject {
     @IBOutlet var showTimeSeparatorsCheckbox: NSButton!
     @IBOutlet var fontSelector: NSPopUpButton!
     @IBOutlet var fontWeightSelector: NSPopUpButton!
+    @IBOutlet var plainFontsOnlyCheckbox: NSButton!
     @IBOutlet var mainScreenCheckbox: NSButton!
     
     override init() {
@@ -51,23 +52,32 @@ class ConfigureSheetController: NSObject {
         twentyfourHoursCheckbox.state = preferences.useAmPm ? .off : .on
         showSecondsCheckbox.state = preferences.showSeconds ? .on : .off
         showTimeSeparatorsCheckbox.state = preferences.showTimeSeparators ? .on : .off
-        fontSelector.selectItem(withTitle: preferences.font.name)
+        fontSelector.selectItem(withTitle: preferences.fontFamily.name)
         mainScreenCheckbox.state = preferences.mainScreenOnly ? .on : .off
+        plainFontsOnlyCheckbox.state = preferences.plainFontsOnly ? .on : .off
         
         // Remove all options from the font selector and add the ones corresponding to the fonts
         fontSelector.removeAllItems()
         fontSelector.addItems(withTitles: SupportedFont.allCases.map { $0.name })
-        fontSelector.selectItem(withTitle: preferences.font.name)
+        fontSelector.selectItem(withTitle: preferences.fontFamily.name)
+        // Apply font style
+        for (index, font) in SupportedFont.allCases.enumerated() {
+            fontSelector.item(at: index)?.attributedTitle = NSAttributedString(string: font.name, attributes: [.font: NSFont(name: font.fontFamilyName, size: NSFont.systemFontSize) ?? NSFont.menuFont(ofSize: NSFont.systemFontSize)])
+        }
         
         // Remove all the options from the font weight selector
         // and add the ones corresponding to the current font
         fontWeightSelector.removeAllItems()
-        fontWeightSelector.addItems(withTitles: preferences.font.availableWeights.map({ $0.name }))
+        fontWeightSelector.addItems(withTitles: preferences.fontFamily.availableWeights)
         // Select the correct item
         // If the weight is not available for this font select the first option
-        fontWeightSelector.selectItem(at: preferences.font.availableWeights.firstIndex(where: { $0.name == preferences.fontWeight.name }) ?? 0 )
+        fontWeightSelector.selectItem(at: preferences.fontFamily.availableWeights.firstIndex(of: preferences.styleName) ?? 0)
+        // Preview font
+        for (index, typeName) in preferences.fontFamily.availableWeights.enumerated() {
+            fontWeightSelector.item(at: index)?.attributedTitle = NSAttributedString(string: typeName, attributes: [.font: NSFont(name: preferences.fontFamily.postscriptName(for: typeName) ?? "", size: NSFont.systemFontSize) ?? NSFont.menuFont(ofSize: NSFont.systemFontSize)])
+        }
         // Store said option back to the settings in case it changed
-        preferences.fontWeight = NSFont.Weight.from(name: fontWeightSelector.selectedItem?.title ?? "")
+        preferences.styleName = fontWeightSelector.selectedItem?.title ?? ""
         
         // Trigger update of the preview window
         ClockView.shared?.setup(force: true)
@@ -84,9 +94,10 @@ class ConfigureSheetController: NSObject {
         preferences.useAmPm = twentyfourHoursCheckbox.state == .off
         preferences.showSeconds = showSecondsCheckbox.state == .on
         preferences.showTimeSeparators = showTimeSeparatorsCheckbox.state == .on
-        preferences.font = SupportedFont.named(fontSelector.selectedItem?.title ?? "")
-        preferences.fontWeight = NSFont.Weight.from(name: fontWeightSelector.selectedItem?.title ?? "")
+        preferences.fontFamily = SupportedFont.named(fontSelector.selectedItem?.title ?? "")
+        preferences.styleName = fontWeightSelector.selectedItem?.title ?? ""
         preferences.mainScreenOnly = mainScreenCheckbox.state == .on
+        preferences.plainFontsOnly = plainFontsOnlyCheckbox.state == .on
         
         // Update the options. Font weight might have changed.
         self.setup()

@@ -21,69 +21,38 @@ class Preferences: NSObject {
         Preferences.shared = self
     }
     
-    var font: SupportedFont {
+    var fontFamily: SupportedFont {
         // Which font should be used
-        get { return SupportedFont.named(defaults.value(forKey: "Font") as? String ?? "") }
+        get { return SupportedFont.named(defaults.value(forKey: "FontFamily") as? String ?? "") }
         set {
-            defaults.setValue(newValue.name, forKey: "Font")
+            defaults.setValue(newValue.name, forKey: "FontFamily")
             defaults.synchronize()
         }
     }
     
     func nsFont(ofSize fontSize: CGFloat) -> NSFont {
         // The NSFont to use with correct weight and size set
-        let fallback = NSFont.monospacedDigitSystemFont(ofSize: fontSize, weight: fontWeight)
-        switch font {
-        case .sanFrancisco:
-            // Default system font
-            return .monospacedDigitSystemFont(ofSize: fontSize, weight: fontWeight)
-        case .sanFranciscoMono:
-            // Monospace default system font
-            return .monospacedSystemFont(ofSize: fontSize, weight: fontWeight)
-        case .newYork:
-            // Serif default system font
-            let descriptor = NSFont.monospacedDigitSystemFont(ofSize: fontSize, weight: fontWeight).fontDescriptor
-            return NSFont(descriptor: descriptor.withDesign(.serif) ?? descriptor, size: 0.0) ?? fallback
-        case .neueHelvetica:
-            // Neue Helvetica
-            // Get the name of the font file to load
-            let fontName: String
-            switch fontWeight {
-            case .ultraLight:
-                fontName = "Helvetica Neue UltraLight"
-            case .thin:
-                fontName = "Helvetica Neue Thin"
-            case .light:
-                fontName = "Helvetica Neue Light"
-            case .regular:
-                fontName = "Helvetica Neue"
-            case .medium:
-                fontName = "Helvetica Neue Medium"
-            case .bold:
-                fontName = "Helvetica Neue Bold"
-            default:
-                fontName = "Helvetica Neue"
-            }
-            // Load the font
-            guard var font = NSFont(name: fontName, size: fontSize) else { return fallback }
-            // Apply TrueType stylistic sets to get proportional numbers and the raised colon.
-            let fontAttributes: [NSFontDescriptor.AttributeName: Any] = [
-                .featureSettings: [
-                    [
-                        // Proportional Numbers
-                        NSFontDescriptor.FeatureKey.typeIdentifier: 6,
-                        NSFontDescriptor.FeatureKey.selectorIdentifier: 1
-                    ],
-                    [
-                        // Alternate Punctuation (rounded, raised colon)
-                        NSFontDescriptor.FeatureKey.typeIdentifier: 17,
-                        NSFontDescriptor.FeatureKey.selectorIdentifier: 1
-                    ]
-                 ]
-            ]
-            // Apply the attributes
-            font = NSFont(descriptor: font.fontDescriptor.addingAttributes(fontAttributes), size: 0.0) ?? font
-            return font
+        let fallback = NSFont.monospacedDigitSystemFont(ofSize: fontSize, weight: .regular)
+        
+        // Load the font
+        guard var font = NSFont(name: fontFamily.postscriptName(for: styleName) ?? "", size: fontSize) else { return fallback }
+        // Apply TrueType stylistic sets to get proportional numbers.
+        var featureSettings: [[NSFontDescriptor.FeatureKey: Int]] = [[.typeIdentifier: kNumberSpacingType, .selectorIdentifier: kMonospacedNumbersSelector]]
+        if fontFamily == .neueHelvetica {
+            // Alternate Punctuation (rounded, raised colon)
+            featureSettings.append([.typeIdentifier: kCharacterAlternativesType, .selectorIdentifier: 1])
+        }
+        // Apply the attributes
+        font = NSFont(descriptor: font.fontDescriptor.addingAttributes([.featureSettings: featureSettings]), size: 0.0) ?? font
+        return font
+    }
+    
+    var plainFontsOnly: Bool {
+        // Only use Regular Width Roman Fonts
+        get { return (defaults.value(forKey: "PlainFontsOnly") as? Bool) ?? true }
+        set {
+            defaults.setValue(newValue, forKey: "PlainFontsOnly")
+            defaults.synchronize()
         }
     }
 
@@ -123,11 +92,11 @@ class Preferences: NSObject {
         }
     }
 
-    var fontWeight: NSFont.Weight {
+    var styleName: String {
         // The font weight to be used
-        get { return NSFont.Weight.from(name: (defaults.value(forKey: "fontWeight") as? String) ?? "Ultra Light") }
+        get { return defaults.value(forKey: "styleName") as? String ??  "UltraLight" }
         set {
-            defaults.setValue(newValue.name, forKey: "fontWeight")
+            defaults.setValue(newValue, forKey: "styleName")
             defaults.synchronize()
         }
     }
@@ -174,60 +143,32 @@ enum SupportedFont: String, CaseIterable {
         }
     }
     
+    var fontFamilyName: String {
+        // The name of the font family ".AppleSystemUIFontUltraLight"
+        switch self {
+        case .sanFrancisco:
+            return ".AppleSystemUIFont"
+        case .sanFranciscoMono:
+            return ".AppleSystemUIFontMonospaced"
+        case .newYork:
+            return ".AppleSystemUIFontSerif"
+        case .neueHelvetica:
+            return "Helvetica Neue"
+        }
+    }
+    
     static func named(_ name: String) -> SupportedFont {
         // Get the font from the name
         SupportedFont.allCases.first(where: { $0.name == name }) ?? .sanFrancisco
     }
     
-    var availableWeights: [NSFont.Weight] {
+    var availableWeights: [String] {
         // List of available font weights for each font
-        switch self {
-        case .sanFrancisco:
-            return [.ultraLight, .thin, .light, .regular, .medium, .semibold, .bold, .heavy, .black]
-        case .sanFranciscoMono:
-            return [.light, .regular, .medium, .semibold, .bold, .heavy, .black]
-        case .newYork:
-            return [.regular, .medium, .semibold, .bold, .heavy, .black]
-        case .neueHelvetica:
-            return [.ultraLight, .thin, .light, .regular, .medium, .bold]
-        }
+        return (NSFontManager.shared.availableMembers(ofFontFamily: self.fontFamilyName)?.filter({ !(Preferences.shared?.plainFontsOnly ?? true) || Int(truncating: $0[3] as? NSNumber ?? 0)&0b1000001 == 0 }).map({ $0[1] as? String ?? "Error" })) ?? []
     }
-}
-
-// MARK: - NSFont.Weight Names
-
-extension NSFont.Weight {
-    var name: String {
-        // Names for font weights
-        get {
-            switch self {
-            case .ultraLight:   return "Ultra Light"
-            case .thin:         return "Thin"
-            case .light:        return "Light"
-            case .regular:      return "Regular"
-            case .medium:       return "Medium"
-            case .semibold:     return "Semibold"
-            case .bold:         return "Bold"
-            case .heavy:        return "Heavy"
-            case .black:        return "Black"
-            default:            return "Regular"
-            }
-        }
-    }
-
-    static func from(name: String) -> NSFont.Weight {
-        // Font weight from name
-        switch name {
-        case "Ultra Light": return .ultraLight
-        case "Thin":        return .thin
-        case "Light":       return .light
-        case "Regular":     return .regular
-        case "Medium":      return .medium
-        case "Semibold":    return .semibold
-        case "Bold":        return .bold
-        case "Heavy":       return .heavy
-        case "Black":       return .black
-        default:            return .regular
-        }
+    
+    func postscriptName(for styleName: String) -> String? {
+        // Get
+        return NSFontManager.shared.availableMembers(ofFontFamily: self.fontFamilyName)?.first(where: { $0[1] as? String == styleName })?[0] as? String
     }
 }
