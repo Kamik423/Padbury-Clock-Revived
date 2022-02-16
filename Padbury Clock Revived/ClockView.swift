@@ -22,7 +22,6 @@ final class ClockView: ScreenSaverView {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-//        ClockView.shared = self
     }
     
     // MARK: - Configuration
@@ -40,16 +39,23 @@ final class ClockView: ScreenSaverView {
     var attributes: [NSAttributedString.Key: Any] = [:]
     
     var lastUsedNightTimeMode: Bool = false
+    var sytemWasDarkMode: Bool = false
     
     func setup(force: Bool = false) {
         // Get the current hour to determine conditions for night mode
         let currentHour = Calendar.current.component(.hour, from: Date())
         let useNightTimeMode = preferences.nightTimeMode && (currentHour >= (10 + 12) || currentHour < 6)
         let nightTimeModeChanged = lastUsedNightTimeMode != useNightTimeMode
+        lastUsedNightTimeMode = useNightTimeMode
+        
+        // Compute dark mode
+        let systemIsDarkMode = effectiveAppearance.bestMatch(from: [.darkAqua, .vibrantDark]) == .darkAqua
+        let darkModeChanged = systemIsDarkMode != sytemWasDarkMode
+        sytemWasDarkMode = systemIsDarkMode
         
         // Don't run the setup for every frame, only for the first time or when explicitly asked to
-        // or when the night time mode changed
-        if hasSetup && !force && !nightTimeModeChanged { return }
+        // or when the night time mode conditions or dark mode changed
+        if hasSetup && !(force || nightTimeModeChanged || darkModeChanged) { return }
         hasSetup = true
         
         // Set the background and foreground color variables to use later
@@ -57,7 +63,7 @@ final class ClockView: ScreenSaverView {
             backgroundColor = .black
             // Red night time mode color, picked from the original
             foregroundColor = NSColor(red: 255 / 255, green: 59 / 255, blue: 48 / 255, alpha: 1)
-        } else if preferences.darkTheme {
+        } else if preferences.appearance == .dark || preferences.appearance == .system && systemIsDarkMode {
             backgroundColor = .black
             foregroundColor = .white
         } else { // light theme

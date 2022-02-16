@@ -15,7 +15,7 @@ class ConfigureSheetController: NSObject {
     // Outlets for the checkboxes to use
     @IBOutlet var versionStringLabel: NSTextField!
     
-    @IBOutlet var darkThemeCheckbox: NSButton!
+    @IBOutlet var appearanceSelector: NSPopUpButton!
     @IBOutlet var nightTimeModeCheckbox: NSButton!
     @IBOutlet var twentyfourHoursCheckbox: NSButton!
     @IBOutlet var showSecondsCheckbox: NSButton!
@@ -46,8 +46,12 @@ class ConfigureSheetController: NSObject {
         // Continue only if the preferences can be loaded
         guard let preferences = Preferences.shared else { return }
         
+        // Remove all options from the appearance selectorand add the ones corresponding to the available ones
+        appearanceSelector.removeAllItems()
+        appearanceSelector.addItems(withTitles: Appearance.allCases.map({ $0.title }))
+        appearanceSelector.selectItem(withTitle: preferences.appearance.title)
+        
         // Set the checkboxes according to the settings
-        darkThemeCheckbox.state = preferences.darkTheme ? .on : .off
         nightTimeModeCheckbox.state = preferences.nightTimeMode ? .on : .off
         twentyfourHoursCheckbox.state = preferences.useAmPm ? .off : .on
         showSecondsCheckbox.state = preferences.showSeconds ? .on : .off
@@ -88,8 +92,7 @@ class ConfigureSheetController: NSObject {
         
         // Continue only if the preferences can be loaded correctly
         guard let preferences = Preferences.shared else { return }
-        
-        preferences.darkTheme = darkThemeCheckbox.state == .on
+        preferences.appearance = Appearance.titled(appearanceSelector.titleOfSelectedItem ?? "") ?? .dark
         preferences.nightTimeMode = nightTimeModeCheckbox.state == .on
         preferences.useAmPm = twentyfourHoursCheckbox.state == .off
         preferences.showSeconds = showSecondsCheckbox.state == .on

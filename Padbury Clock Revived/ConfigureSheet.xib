@@ -8,7 +8,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="ConfigureSheetController" customModule="Padbury_Clock_Revived" customModuleProvider="target">
             <connections>
-                <outlet property="darkThemeCheckbox" destination="S00-ph-A7z" id="O8B-jv-brD"/>
+                <outlet property="appearanceSelector" destination="GTP-Pj-lTg" id="6wV-Kz-gLW"/>
                 <outlet property="fontSelector" destination="zfh-nJ-hc4" id="sgj-ET-U7i"/>
                 <outlet property="fontWeightSelector" destination="ZPr-3s-mEV" id="Lvz-Is-N9l"/>
                 <outlet property="mainScreenCheckbox" destination="1UD-4O-M08" id="QDq-cb-heL"/>
@@ -34,7 +34,7 @@
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <gridView xPlacement="leading" yPlacement="fill" rowAlignment="firstBaseline" rowSpacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="gJC-Fu-Ran">
-                        <rect key="frame" x="16" y="37" width="430" height="307"/>
+                        <rect key="frame" x="16" y="33" width="430" height="311"/>
                         <rows>
                             <gridRow yPlacement="top" rowAlignment="firstBaseline" id="qR4-PX-gJf"/>
                             <gridRow yPlacement="top" rowAlignment="firstBaseline" id="hNR-Sn-yK5"/>
@@ -49,7 +49,7 @@
                         <gridCells>
                             <gridCell row="qR4-PX-gJf" column="zi3-Ws-PdH" id="0fO-xp-vHq">
                                 <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nvf-RD-QbQ">
-                                    <rect key="frame" x="57" y="291" width="50" height="16"/>
+                                    <rect key="frame" x="57" y="294" width="50" height="16"/>
                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Theme:" id="LXO-Ih-MrQ">
                                         <font key="font" usesAppearanceFont="YES"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -59,18 +59,19 @@
                             </gridCell>
                             <gridCell row="qR4-PX-gJf" column="Ci0-4x-MqC" id="Wxv-Fj-hWb">
                                 <stackView key="contentView" distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sea-gl-kUy">
-                                    <rect key="frame" x="111" y="246" width="319" height="61"/>
+                                    <rect key="frame" x="111" y="246" width="319" height="65"/>
                                     <subviews>
-                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="S00-ph-A7z">
-                                            <rect key="frame" x="-2" y="44" width="100" height="18"/>
-                                            <buttonCell key="cell" type="check" title="Dark Theme" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="lIc-rj-tyA">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
+                                        <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GTP-Pj-lTg">
+                                            <rect key="frame" x="-3" y="41" width="39" height="25"/>
+                                            <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="VHP-lP-KjH">
+                                                <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="menu"/>
+                                                <menu key="menu" id="a6L-EO-Mvl"/>
+                                            </popUpButtonCell>
                                             <connections>
-                                                <action selector="toggledCheckbox:" target="-2" id="GfI-fe-sKG"/>
+                                                <action selector="toggledCheckbox:" target="-2" id="ULQ-J9-qLO"/>
                                             </connections>
-                                        </button>
+                                        </popUpButton>
                                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Amm-Fe-f9G">
                                             <rect key="frame" x="-2" y="20" width="130" height="18"/>
                                             <buttonCell key="cell" type="check" title="Night Time Mode" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="vLg-7I-fzF">

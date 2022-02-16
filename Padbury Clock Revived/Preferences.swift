@@ -61,11 +61,11 @@ class Preferences: NSObject {
         }
     }
 
-    var darkTheme: Bool {
+    var appearance: Appearance {
         // Should the dark theme be used
-        get { return (defaults.value(forKey: "DarkTheme") as? Bool) ?? true }
+        get { return Appearance(rawValue: defaults.value(forKey: "appearance") as? String ?? "") ?? .dark }
         set {
-            defaults.setValue(newValue, forKey: "DarkTheme")
+            defaults.setValue(newValue.rawValue, forKey: "appearance")
             defaults.synchronize()
         }
     }
@@ -125,7 +125,30 @@ class Preferences: NSObject {
     }
 }
 
-// MARK: - Supported Fonts ENum
+// MARK: - Dark Mode Enum
+
+enum Appearance: String, CaseIterable {
+    case dark
+    case light
+    case system
+    
+    var title: String {
+        switch self {
+        case .dark:
+            return "Dark"
+        case .light:
+            return "Light"
+        case .system:
+            return "System"
+        }
+    }
+    
+    static func titled(_ title: String) -> Appearance? {
+        return Appearance.allCases.first(where: { $0.title == title })
+    }
+}
+
+// MARK: - Supported Fonts Enum
 
 enum SupportedFont: String, CaseIterable {
     // Enum of the supported fonts
