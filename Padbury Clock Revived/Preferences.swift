@@ -42,6 +42,10 @@ class Preferences: NSObject {
             // Alternate Punctuation (rounded, raised colon)
             featureSettings.append([.typeIdentifier: kCharacterAlternativesType, .selectorIdentifier: 1])
         }
+        // if fontFamily == .sanFrancisco {
+        //     featureSettings.append([.typeIdentifier: kStylisticAlternativesType, .selectorIdentifier: 2])
+        //     featureSettings.append([.typeIdentifier: kStylisticAlternativesType, .selectorIdentifier: 4])
+        // }
         // Alternative fontfeatures can be determined using
         // CTFontCopyFeatures(NSFont(name: ".AppleSystemUIFont", size: 10)!)
         // SF supports open 4, straight 6 and 9

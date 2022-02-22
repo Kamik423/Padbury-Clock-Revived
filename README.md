@@ -25,6 +25,11 @@ Download [the latest version](https://github.com/Kamik423/Padbury-Clock-Revived/
 
 ## Changelog
 
+### 1.1.3 (2022-02-22)
+
+* Added support for dynamic system appearance
+* Improved layout constraints for settings screen
+
 ### 1.1.2 (2022-02-14)
 
 * Dynamically load font weights and display them in the dropdown
