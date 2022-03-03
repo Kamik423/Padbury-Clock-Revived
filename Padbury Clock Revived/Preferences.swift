@@ -158,6 +158,7 @@ enum SupportedFont: String, CaseIterable {
     // Enum of the supported fonts
     case sanFrancisco
     case sanFranciscoMono
+    case sanFranciscoRounded
     case newYork
     case neueHelvetica
     
@@ -168,6 +169,8 @@ enum SupportedFont: String, CaseIterable {
             return "San Francisco (System Font)"
         case .sanFranciscoMono:
             return "San Francisco Mono"
+        case .sanFranciscoRounded:
+            return "San Francisco Rounded"
         case .newYork:
             return "New York"
         case .neueHelvetica:
@@ -182,6 +185,8 @@ enum SupportedFont: String, CaseIterable {
             return ".AppleSystemUIFont"
         case .sanFranciscoMono:
             return ".AppleSystemUIFontMonospaced"
+        case .sanFranciscoRounded:
+            return ".AppleSystemUIFontRounded"
         case .newYork:
             return ".AppleSystemUIFontSerif"
         case .neueHelvetica:

@@ -13,6 +13,7 @@ At that point I decided to recreate it.
 This new version retains most of the settings from the original (I honestly don't get what the alternate theme was supposed to do) and adds a new font family and font weight selection system.
 The original screensaver used Neue Helvetica Ultra Light.
 With the new version you will also be able to select San Francisco, Apple's new system font as the font used.
+Additionally SF Mono, SF Rounded and New York are available.
 The night time mode from the original is also supported.
 
 <img src="screenshots/screenshot-1.png" width=32%> <img src="screenshots/screenshot-2.png" width=32%> <img src="screenshots/screenshot-3.png" width=32%>
@@ -24,6 +25,10 @@ The night time mode from the original is also supported.
 Download [the latest version](https://github.com/Kamik423/Padbury-Clock-Revived/releases/latest/download/Padbury.Clock.Revived.saver.zip) from [the releases page](https://github.com/Kamik423/Padbury-Clock-Revived/releases).
 
 ## Changelog
+
+### 1.1.4 (2022-03-03)
+
+* Added SF Rounded Font
 
 ### 1.1.3 (2022-02-22)
 
